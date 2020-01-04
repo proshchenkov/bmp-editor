@@ -14,7 +14,6 @@ type
 
   TForm1 = class(TForm)
     ColorDialog1: TColorDialog;
-    Image1: TImage;
     MainMenu1: TMainMenu;
     MenuItem1: TMenuItem;
     MenuItem2: TMenuItem;
@@ -22,6 +21,7 @@ type
     MenuItem4: TMenuItem;
     MenuItem5: TMenuItem;
     OpenPictureDialog1: TOpenPictureDialog;
+    PaintBox1: TPaintBox;
     Panel1: TPanel;
     Panel2: TPanel;
     SavePictureDialog1: TSavePictureDialog;
@@ -32,12 +32,14 @@ type
     procedure MenuItem2Click(Sender: TObject);
     procedure MenuItem3Click(Sender: TObject);
     procedure MenuItem5Click(Sender: TObject);
-    procedure Image1MouseDown(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: integer);
-    procedure Image1MouseLeave(Sender: TObject);
-    procedure Image1MouseMove(Sender: TObject; Shift: TShiftState; X, Y: integer);
-    procedure Image1MouseUp(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: integer);
+    procedure PaintBox1MouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure PaintBox1MouseLeave(Sender: TObject);
+    procedure PaintBox1MouseMove(Sender: TObject; Shift: TShiftState; X,
+      Y: Integer);
+    procedure PaintBox1MouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure PaintBox1Paint(Sender: TObject);
     procedure Panel2Click(Sender: TObject);
     procedure SpinEdit1Change(Sender: TObject);
   private
@@ -49,6 +51,7 @@ type
 var
   Form1: TForm1;
   draw: boolean;
+  bmp: TBitmap;
 
 implementation
 
@@ -56,32 +59,42 @@ implementation
 
 { TForm1 }
 
-procedure TForm1.Image1MouseDown(Sender: TObject; Button: TMouseButton;
+procedure TForm1.PaintBox1MouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: integer);
 begin
   draw := True;
-  Image1.Canvas.MoveTo(x, y);
+  bmp.Canvas.MoveTo(x, y);
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-  Image1.Width := 800;
-  Image1.Height := 600;
-  Image1.Top := 10;
-  Image1.Left := 10;
-  Image1.Canvas.FillRect(0, 0, Image1.Width, Image1.Height);
+  bmp := TBitmap.Create;
+  bmp.Width := 800;
+  bmp.Height := 600;
+  PaintBox1.Width := 800;
+  PaintBox1.Height := 600;
+  PaintBox1.Top := 10;
+  PaintBox1.Left := 10;
+  bmp.Canvas.FillRect(0, 0, bmp.Width, bmp.Height);
+  PaintBox1Paint(Sender);
+end;
+
+procedure TForm1.PaintBox1Paint(Sender: TObject);
+begin
+  PaintBox1.Canvas.Draw(0, 0, bmp);
 end;
 
 procedure TForm1.SpinEdit1Change(Sender: TObject);
 begin
-  Image1.Canvas.Pen.Width := SpinEdit1.Value;
+  bmp.Canvas.Pen.Width := SpinEdit1.Value;
 end;
 
 procedure TForm1.MenuItem2Click(Sender: TObject);
 begin
   if OpenPictureDialog1.Execute then
   begin
-    Image1.Picture.LoadFromFile(OpenPictureDialog1.FileName);
+    bmp.LoadFromFile(OpenPictureDialog1.FileName);
+    PaintBox1Paint(Sender);
     StatusBar1.Panels[1].Text := OpenPictureDialog1.FileName;
   end;
 end;
@@ -90,7 +103,7 @@ procedure TForm1.MenuItem3Click(Sender: TObject);
 begin
   if SavePictureDialog1.Execute then
   begin
-    Image1.Picture.SaveToFile(SavePictureDialog1.FileName);
+    bmp.SaveToFile(SavePictureDialog1.FileName);
     StatusBar1.Panels[1].Text := SavePictureDialog1.FileName;
   end;
 end;
@@ -109,21 +122,22 @@ begin
   end;
 end;
 
-procedure TForm1.Image1MouseLeave(Sender: TObject);
+procedure TForm1.PaintBox1MouseLeave(Sender: TObject);
 begin
   StatusBar1.Panels[0].Text := '';
 end;
 
-procedure TForm1.Image1MouseMove(Sender: TObject; Shift: TShiftState; X, Y: integer);
+procedure TForm1.PaintBox1MouseMove(Sender: TObject; Shift: TShiftState; X, Y: integer);
 begin
   if draw then
   begin
-    Image1.Canvas.LineTo(x, y);
+    bmp.Canvas.LineTo(x, y);
+    PaintBox1Paint(Sender);
   end;
   StatusBar1.Panels[0].Text := ' ' + X.ToString + ', ' + Y.ToString;
 end;
 
-procedure TForm1.Image1MouseUp(Sender: TObject; Button: TMouseButton;
+procedure TForm1.PaintBox1MouseUp(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: integer);
 begin
   draw := False;
@@ -133,7 +147,7 @@ procedure TForm1.Panel2Click(Sender: TObject);
 begin
   if ColorDialog1.Execute then
   begin
-    Image1.Canvas.Pen.Color := ColorDialog1.Color;
+    bmp.Canvas.Pen.Color := ColorDialog1.Color;
     Panel2.Color := ColorDialog1.Color;
   end;
 end;

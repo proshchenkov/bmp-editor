@@ -60,9 +60,9 @@ object Form1: TForm1
     Height = 273
     Top = 0
     Width = 370
-    HorzScrollBar.Page = 234
+    HorzScrollBar.Page = 297
     HorzScrollBar.Tracking = True
-    VertScrollBar.Page = 152
+    VertScrollBar.Page = 241
     VertScrollBar.Tracking = True
     Align = alClient
     ClientHeight = 269
@@ -70,15 +70,16 @@ object Form1: TForm1
     Color = clScrollBar
     ParentColor = False
     TabOrder = 2
-    object Image1: TImage
-      Left = 0
-      Height = 152
-      Top = 0
-      Width = 234
-      AutoSize = True
-      OnMouseDown = Image1MouseDown
-      OnMouseMove = Image1MouseMove
-      OnMouseUp = Image1MouseUp
+    object PaintBox1: TPaintBox
+      Left = 48
+      Height = 177
+      Top = 64
+      Width = 249
+      OnMouseDown = PaintBox1MouseDown
+      OnMouseLeave = PaintBox1MouseLeave
+      OnMouseMove = PaintBox1MouseMove
+      OnMouseUp = PaintBox1MouseUp
+      OnPaint = PaintBox1Paint
     end
   end
   object MainMenu1: TMainMenu
@@ -134,10 +135,12 @@ object Form1: TForm1
     top = 80
   end
   object OpenPictureDialog1: TOpenPictureDialog
+    Filter = 'Portable Network Graphic (*.png)|*.png|Pixmap (*.xpm)|*.xpm|Bitmaps (*.bmp)|*.bmp|Cursor (*.cur)|*.cur|Icon (*.ico)|*.ico|Mac OS X Icon (*.icns)|*.icns|Joint Picture Expert Group (*.jpeg;*.jpg;*.jpe;*.jfif)|*.jpeg;*.jpg;*.jpe;*.jfif|Tagged Image File Format (*.tif;*.tiff)|*.tif;*.tiff|Graphics Interchange Format (*.gif)|*.gif|Portable PixMap (*.pbm;*.pgm;*.ppm)|*.pbm;*.pgm;*.ppm|Все файлы (*.*)|*.*'
     left = 88
     top = 80
   end
   object SavePictureDialog1: TSavePictureDialog
+    Filter = 'Portable Network Graphic (*.png)|*.png|Pixmap (*.xpm)|*.xpm|Bitmaps (*.bmp)|*.bmp|Cursor (*.cur)|*.cur|Icon (*.ico)|*.ico|Mac OS X Icon (*.icns)|*.icns|Joint Picture Expert Group (*.jpeg;*.jpg;*.jpe;*.jfif)|*.jpeg;*.jpg;*.jpe;*.jfif|Tagged Image File Format (*.tif;*.tiff)|*.tif;*.tiff|Graphics Interchange Format (*.gif)|*.gif|Portable PixMap (*.pbm;*.pgm;*.ppm)|*.pbm;*.pgm;*.ppm|Все файлы (*.*)|*.*'
     left = 192
     top = 16
   end
