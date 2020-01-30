@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, Menus,
-  StdCtrls, ComCtrls, ExtDlgs, Spin;
+  StdCtrls, ComCtrls, ExtDlgs, Spin, PrintersDlgs, Printers;
 
 type
 
@@ -20,10 +20,12 @@ type
     MenuItem3: TMenuItem;
     MenuItem4: TMenuItem;
     MenuItem5: TMenuItem;
+    MenuItem6: TMenuItem;
     OpenPictureDialog1: TOpenPictureDialog;
     PaintBox1: TPaintBox;
     Panel1: TPanel;
     Panel2: TPanel;
+    PrintDialog1: TPrintDialog;
     SavePictureDialog1: TSavePictureDialog;
     ScrollBox1: TScrollBox;
     SpinEdit1: TSpinEdit;
@@ -32,13 +34,14 @@ type
     procedure MenuItem2Click(Sender: TObject);
     procedure MenuItem3Click(Sender: TObject);
     procedure MenuItem5Click(Sender: TObject);
+    procedure MenuItem6Click(Sender: TObject);
     procedure PaintBox1MouseDown(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
+      Shift: TShiftState; X, Y: integer);
     procedure PaintBox1MouseLeave(Sender: TObject);
-    procedure PaintBox1MouseMove(Sender: TObject; Shift: TShiftState; X,
-      Y: Integer);
+    procedure PaintBox1MouseMove(Sender: TObject; Shift: TShiftState;
+      X, Y: integer);
     procedure PaintBox1MouseUp(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
+      Shift: TShiftState; X, Y: integer);
     procedure PaintBox1Paint(Sender: TObject);
     procedure Panel2Click(Sender: TObject);
     procedure SpinEdit1Change(Sender: TObject);
@@ -73,8 +76,8 @@ begin
   bmp.Height := 600;
   PaintBox1.Width := 800;
   PaintBox1.Height := 600;
-  PaintBox1.Top := 10;
-  PaintBox1.Left := 10;
+  PaintBox1.Top := 0;
+  PaintBox1.Left := 0;
   bmp.Canvas.FillRect(0, 0, bmp.Width, bmp.Height);
   PaintBox1Paint(Sender);
 end;
@@ -119,6 +122,17 @@ begin
   begin
     MenuItem5.Checked := True;
     StatusBar1.Visible := True;
+  end;
+end;
+
+procedure TForm1.MenuItem6Click(Sender: TObject);
+begin
+  if PrintDialog1.Execute then
+  begin
+    Printer.BeginDoc;
+    Printer.Canvas.Draw(0, 0, bmp);
+    Printer.Canvas.StretchDraw(Rect(0, 0, bmp.Height * 3, bmp.Width * 3), bmp);
+    Printer.EndDoc;
   end;
 end;
 

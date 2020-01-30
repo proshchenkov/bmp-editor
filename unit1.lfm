@@ -1,19 +1,19 @@
 object Form1: TForm1
   Left = 254
-  Height = 312
+  Height = 315
   Top = 120
-  Width = 418
+  Width = 408
   Caption = 'Графический редактор'
-  ClientHeight = 293
-  ClientWidth = 418
+  ClientHeight = 296
+  ClientWidth = 408
   Menu = MainMenu1
   OnCreate = FormCreate
   LCLVersion = '2.0.6.0'
   object StatusBar1: TStatusBar
     Left = 0
     Height = 20
-    Top = 273
-    Width = 418
+    Top = 276
+    Width = 408
     Panels = <    
       item
         Width = 100
@@ -26,11 +26,11 @@ object Form1: TForm1
   end
   object Panel1: TPanel
     Left = 0
-    Height = 273
+    Height = 276
     Top = 0
     Width = 48
     Align = alLeft
-    ClientHeight = 273
+    ClientHeight = 276
     ClientWidth = 48
     ParentColor = False
     TabOrder = 1
@@ -41,7 +41,7 @@ object Form1: TForm1
       Width = 34
       Color = clBlack
       ParentColor = False
-      TabOrder = 0
+      TabOrder = 1
       OnClick = Panel2Click
     end
     object SpinEdit1: TSpinEdit
@@ -51,25 +51,21 @@ object Form1: TForm1
       Width = 34
       MinValue = 1
       OnChange = SpinEdit1Change
-      TabOrder = 1
+      TabOrder = 0
       Value = 1
     end
   end
   object ScrollBox1: TScrollBox
     Left = 48
-    Height = 273
+    Height = 276
     Top = 0
-    Width = 370
+    Width = 360
     HorzScrollBar.Page = 297
-    HorzScrollBar.Tracking = True
     VertScrollBar.Page = 241
-    VertScrollBar.Tracking = True
     Align = alClient
-    ClientHeight = 269
-    ClientWidth = 366
-    Color = clScrollBar
-    ParentColor = False
-    TabOrder = 2
+    ClientHeight = 272
+    ClientWidth = 356
+    TabOrder = 0
     object PaintBox1: TPaintBox
       Left = 48
       Height = 177
@@ -96,6 +92,11 @@ object Form1: TForm1
         Caption = 'Сохранить'
         ShortCut = 16467
         OnClick = MenuItem3Click
+      end
+      object MenuItem6: TMenuItem
+        Caption = 'Печать'
+        ShortCut = 16464
+        OnClick = MenuItem6Click
       end
     end
     object MenuItem4: TMenuItem
@@ -143,5 +144,9 @@ object Form1: TForm1
     Filter = 'Portable Network Graphic (*.png)|*.png|Pixmap (*.xpm)|*.xpm|Bitmaps (*.bmp)|*.bmp|Cursor (*.cur)|*.cur|Icon (*.ico)|*.ico|Mac OS X Icon (*.icns)|*.icns|Joint Picture Expert Group (*.jpeg;*.jpg;*.jpe;*.jfif)|*.jpeg;*.jpg;*.jpe;*.jfif|Tagged Image File Format (*.tif;*.tiff)|*.tif;*.tiff|Graphics Interchange Format (*.gif)|*.gif|Portable PixMap (*.pbm;*.pgm;*.ppm)|*.pbm;*.pgm;*.ppm|Все файлы (*.*)|*.*'
     left = 192
     top = 16
+  end
+  object PrintDialog1: TPrintDialog
+    left = 88
+    top = 144
   end
 end
